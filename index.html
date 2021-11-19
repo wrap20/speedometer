@@ -45,8 +45,8 @@
         <select name="orientation" id="orientation">
             <option value="portrait-primary">portrait-primary</option>
             <option value="portrait-secondary">portrait-secondary</option>
-            <option value="lanscape-primary">lanscape-primary</option>
-            <option value="lanscape-secondary">lanscape-secondary</option>
+            <option value="landscape-primary">landscape-primary</option>
+            <option value="landscape-secondary">landscape-secondary</option>
         </select>
 
         <button id="invert">invert</button>
@@ -57,6 +57,8 @@
     <script>
         const cacheName = "speedometer";
         
+        document.title = "speed";
+
         let maxSpeed = 0;
         let speed = 0;
         let unit = "km/h";
