@@ -11,13 +11,22 @@
     <script src="./sw.js"></script>
 
     <title>Document</title>
+
+    <style>
+        body{
+            background-color: black;
+            color: yellowgreen;
+        }
+    </style>
 </head>
 <body>
 
     <div class="container">
         <div class="d">
             <h1 id="s">00.0</h1>
-            <h5 id="sm">00.0</h5>
+            <br>
+            <a id="sm">00.0</a>
+            <a id="unit-d"></a>
         </div>
     </div>
 
@@ -50,11 +59,13 @@
         
         let maxSpeed = 0;
         let speed = 0;
-        let unit = 0;
-        let invert = 0;
+        let unit = "km/h";
+        let invert = false;
+        let orientation = "portrait-primary"
 
         let el_speed = document.getElementById("s");
         let el_maxSpeed = document.getElementById("sm");
+        let el_unitd = document.getElementById("unit-d");
 
         let elements = {
             invert: document.getElementById("invert"),
@@ -71,9 +82,26 @@
         
         elements.unit.addEventListener("change", e=> {
             unit = e.target.value;
+            el_unitd.innerText = unit;
         })
         elements.orientation.addEventListener("change", e=> {
             // unit = e.target.value;
+            orientation = e.target.value;
+            if(orientation.split("-")[0] != "portrait"){
+                document.body.requestFullscreen();
+                screen.orientation.unlock();
+                screen.orientation.lock(orientation).then(()=>{
+                      
+                })
+            }
+            else{
+                document.exitFullscreen();
+                screen.orientation.unlock();
+                screen.orientation.lock(orientation).then(()=>{
+                      
+                })
+
+            }
         })
         
         elements.clear.addEventListener("click", e=> {
