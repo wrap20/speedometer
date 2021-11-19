@@ -18,8 +18,9 @@
             color: yellowgreen;
             margin: 0;
             padding: 0;
-            width: 100vw;
-            height: 100vh;
+            width: 95vw;
+            height: 95vh;
+            font-family: monospace;
         }
         .container{
             width: 100%;
@@ -30,11 +31,30 @@
         .d{
             margin: auto;
         }
+
+        #s{
+            font-size: 600%;
+            margin: 0;
+        }
+        #sm{
+            font-size: 300%;
+            margin: 0;
+            margin-top: 20px;
+        }
+
+        footer{
+            position: fixed;
+            bottom: 0;
+        }
+
+        .inverted{
+            transform: scale(1, -1);
+        }
     </style>
 </head>
-<body>
+<body class="">
 
-    <div class="container">
+    <div class="container" id="container">
         <div class="d">
             <h1 id="s">00.0</h1>
             <br>
@@ -78,9 +98,11 @@
         let invert = false;
         let orientation = "portrait-primary"
 
+        let el_container = document.getElementById("container");
         let el_speed = document.getElementById("s");
         let el_maxSpeed = document.getElementById("sm");
         let el_unitd = document.getElementById("unit-d");
+        el_unitd.innerText = unit;
 
         let elements = {
             invert: document.getElementById("invert"),
@@ -121,6 +143,16 @@
         
         elements.clear.addEventListener("click", e=> {
             caches.delete(cacheName);
+        })
+
+        elements.invert.addEventListener("click", e=> {
+            if(invert){
+                container.classList.remove("inverted")
+            }
+            else{
+                container.classList.add("inverted");
+            }
+            invert = !invert
         })
         
         const units = {
