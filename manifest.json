@@ -1,0 +1,7 @@
+{
+    "name":"Speedometer",
+    "short_name":"speed",
+    "start_url":"/",
+    "orientation": "portrait-primary"
+
+}

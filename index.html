@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name='theme-color' content='#000'>
+    <meta name='google' content='notranslate'>
+    
+    <link rel="manifest" href="./manifest.json">
+    <script src="./sw.js"></script>
+
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="container">
+        <div class="d">
+            <h1 id="s">00.0</h1>
+            <h5 id="sm">00.0</h5>
+        </div>
+    </div>
+
+    
+    <footer>
+        <label for="unit">unit</label>
+        <select name="unit" id="unit">
+            <option value="m/s">m/s</option>
+            <option value="km/h">km/h</option>
+            <option value="knt">knt</option>
+            <option value="mph">mph</option>
+            <option value="fps">fps</option>
+        </select>
+
+        <label for="orientation">screen orientation</label>
+        <select name="orientation" id="orientation">
+            <option value="portrait-primary">portrait-primary</option>
+            <option value="portrait-secondary">portrait-secondary</option>
+            <option value="lanscape-primary">lanscape-primary</option>
+            <option value="lanscape-secondary">lanscape-secondary</option>
+        </select>
+
+        <button id="invert">invert</button>
+        <button id="reset">reset</button>
+        <button id="clear">clear</button>
+    </footer>
+
+    <script>
+        const cacheName = "speedometer";
+        
+        let maxSpeed = 0;
+        let speed = 0;
+        let unit = 0;
+        let invert = 0;
+
+        let el_speed = document.getElementById("s");
+        let el_maxSpeed = document.getElementById("sm");
+
+        let elements = {
+            invert: document.getElementById("invert"),
+            orientation: document.getElementById("orientation"),
+            unit:   document.getElementById("unit"),
+            clear:  document.getElementById("clear"),
+        }
+
+        // let el_unit = document.getElementById("unit");
+
+        // Object.keys(elements)
+
+        
+        elements.unit.addEventListener("change", e=> {
+            unit = e.target.value;
+        })
+        elements.orientation.addEventListener("change", e=> {
+            // unit = e.target.value;
+        })
+        
+        elements.clear.addEventListener("click", e=> {
+            caches.delete(cacheName);
+        })
+        
+        const units = {
+            "m/s": 1,
+            "km/h": 3.6,
+            "knt": 1.94384,
+            "mph": 1,
+            "fps": 1,
+        }
+
+        if(navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(coords => {
+                speed = (coords.speed * units[unit]).toFixed(2);
+                maxSpeed = speed > maxSpeed ? speed : maxSpeed;
+            })
+
+            navigator.geolocation.watchPosition(coords => {
+                speed = (coords.speed * units[unit]).toFixed(2);
+                maxSpeed = speed > maxSpeed ? speed : maxSpeed;
+            })
+        }
+        else{
+            alert("Geolocation unsuported");
+        }
+
+    </script>
+</body>
+</html>
