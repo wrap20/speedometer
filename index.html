@@ -61,6 +61,7 @@
             orientation: document.getElementById("orientation"),
             unit:   document.getElementById("unit"),
             clear:  document.getElementById("clear"),
+            get:  document.getElementById("get"),
         }
 
         // let el_unit = document.getElementById("unit");
@@ -87,15 +88,50 @@
             "fps": 1,
         }
 
+        let gpsData = {
+            latitude: 0,
+            longitude: 0,
+            altitude: 0,
+            heading: 0,
+            speed: 0,
+        }
+
         if(navigator.geolocation){
-            navigator.geolocation.getCurrentPosition(coords => {
+            navigator.geolocation.getCurrentPosition(location => {
+                coords = location.coords;
+
                 speed = (coords.speed * units[unit]).toFixed(2);
                 maxSpeed = speed > maxSpeed ? speed : maxSpeed;
+
+                gpsdata = {
+                    latitude: coords.latitude,
+                    longitude: coords.longitude,
+                    altitude: coords.altitude,
+                    heading: coords.heading,
+                    speed: speed,
+                }
+
+                el_speed.innerText = speed;
+                el_maxSpeed.innerText = maxSpeed;
+
             })
 
-            navigator.geolocation.watchPosition(coords => {
+            navigator.geolocation.watchPosition(location => {
+                coords = location.coords;
+
                 speed = (coords.speed * units[unit]).toFixed(2);
                 maxSpeed = speed > maxSpeed ? speed : maxSpeed;
+
+                gpsdata = {
+                    latitude: coords.latitude,
+                    longitude: coords.longitude,
+                    altitude: coords.altitude,
+                    heading: coords.heading,
+                    speed: speed,
+                }
+                
+                el_speed.innerText = speed;
+                el_maxSpeed.innerText = maxSpeed;
             })
         }
         else{
