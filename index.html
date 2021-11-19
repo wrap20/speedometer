@@ -114,15 +114,15 @@
                 console.log(gpsData);
                 el_speed.innerText = speed;
                 el_maxSpeed.innerText = maxSpeed;
-
+                
             })
-
+            
             navigator.geolocation.watchPosition(location => {
                 coords = location.coords;
-
+                
                 speed = (coords.speed * units[unit]).toFixed(2);
                 maxSpeed = speed > maxSpeed ? speed : maxSpeed;
-
+                
                 gpsdata = {
                     latitude: coords.latitude,
                     longitude: coords.longitude,
@@ -131,6 +131,7 @@
                     speed: speed,
                 }
                 
+                console.log(gpsData);
                 el_speed.innerText = speed;
                 el_maxSpeed.innerText = maxSpeed;
             })
