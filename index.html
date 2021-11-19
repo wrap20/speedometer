@@ -96,6 +96,13 @@
             speed: 0,
         }
 
+        let g_options = {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 100,
+            frequency: 100
+        }
+
         if(navigator.geolocation){
             navigator.geolocation.getCurrentPosition(location => {
                 coords = location.coords;
@@ -115,7 +122,7 @@
                 el_speed.innerText = speed;
                 el_maxSpeed.innerText = maxSpeed;
                 
-            })
+            }, err => {}, g_options);
             
             navigator.geolocation.watchPosition(location => {
                 coords = location.coords;
@@ -134,7 +141,7 @@
                 console.log(gpsData);
                 el_speed.innerText = speed;
                 el_maxSpeed.innerText = maxSpeed;
-            })
+            }, err => {}, g_options);
         }
         else{
             alert("Geolocation unsuported");
