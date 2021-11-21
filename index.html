@@ -93,7 +93,6 @@
 
         <button id="invert">invert</button>
         <button id="reset">reset</button>
-        <button id="clear">clear</button>
     </footer>
 
     <script>
@@ -119,7 +118,6 @@
             size: document.getElementById("size"),
             orientation: document.getElementById("orientation"),
             unit:   document.getElementById("unit"),
-            clear:  document.getElementById("clear"),
             get:  document.getElementById("get"),
         }
 
@@ -154,10 +152,6 @@
                 })
 
             }
-        })
-        
-        elements.clear.addEventListener("click", e=> {
-            caches.delete(cacheName);
         })
 
         elements.invert.addEventListener("click", e=> {
