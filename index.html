@@ -50,13 +50,19 @@
         .inverted{
             transform: scale(1, -1);
         }
+
+        button, input, select{
+            border: none;
+            border-radius: 2px;
+            padding: 1px 5px;
+        }
     </style>
 </head>
 <body class="">
 
     <div class="container" id="container">
         <div class="d">
-            <h1 id="s">00.0</h1>
+            <h1 id="s" style="font-size: 800%;" value="150px">00.0</h1>
             <br>
             <a id="sm">00.0</a>
             <a id="unit-d"></a>
@@ -81,9 +87,13 @@
             <option value="landscape-primary">landscape-primary</option>
             <option value="landscape-secondary">landscape-secondary</option>
         </select>
+        
+        <label for="size">font size</label>
+        <input type="text" id="size" placeholder="800%">
 
         <button id="invert">invert</button>
         <button id="reset">reset</button>
+        <button id="clear">clear</button>
     </footer>
 
     <script>
@@ -95,7 +105,8 @@
         let speed = 0;
         let unit = "km/h";
         let invert = false;
-        let orientation = "portrait-primary"
+        let orientation = "portrait-primary";
+        let size = "800%";
 
         let el_container = document.getElementById("container");
         let el_speed = document.getElementById("s");
@@ -105,8 +116,11 @@
 
         let elements = {
             invert: document.getElementById("invert"),
+            size: document.getElementById("size"),
             orientation: document.getElementById("orientation"),
             unit:   document.getElementById("unit"),
+            clear:  document.getElementById("clear"),
+            get:  document.getElementById("get"),
         }
 
         // let el_unit = document.getElementById("unit");
@@ -117,6 +131,10 @@
         elements.unit.addEventListener("change", e=> {
             unit = e.target.value;
             el_unitd.innerText = unit;
+        })
+        elements.size.addEventListener("change", e=> {
+            size = e.target.value;
+            el_speed.style.fontSize = size;
         })
         elements.orientation.addEventListener("change", e=> {
             // unit = e.target.value;
@@ -138,6 +156,9 @@
             }
         })
         
+        elements.clear.addEventListener("click", e=> {
+            caches.delete(cacheName);
+        })
 
         elements.invert.addEventListener("click", e=> {
             if(invert){
@@ -177,7 +198,10 @@
                 coords = location.coords;
 
                 speed = (coords.speed * units[unit]).toFixed(2);
-                maxSpeed = speed > maxSpeed ? speed : maxSpeed;
+
+                if(speed > maxSpeed){
+                    maxSpeed = speed;
+                }
 
                 gpsdata = {
                     latitude: coords.latitude,
